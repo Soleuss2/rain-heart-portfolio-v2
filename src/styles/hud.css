@@ -1,0 +1,31 @@
+/* ================= HUD ================= */
+
+.hud-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--color-arc-green);
+  box-shadow: 0 0 6px var(--color-arc-green);
+}
+
+/* "SYSTEM ONLINE" light flickers briefly now and then (FX ON only) */
+[data-fx='on'] .hud-dot {
+  animation: hud-dot 9s infinite;
+}
+
+/* the active-link underline flickers once when a link becomes active */
+.hud-underline {
+  animation: btn-flicker 0.3s steps(1) 1;
+}
+
+[data-fx='off'] .hud-underline {
+  animation: none;
+}
+
+@keyframes hud-dot {
+  0%, 92%, 100% { opacity: 1; }
+  93% { opacity: 0.2; }
+  94% { opacity: 1; }
+  96% { opacity: 0.4; }
+  97% { opacity: 1; }
+}

@@ -1,0 +1,204 @@
+@layer components {
+  /* ================= Glitch text ================= */
+
+  .glitch {
+    display: inline-grid;
+  }
+
+  /* invisible copy that reserves the width */
+  .glitch-size {
+    grid-area: 1 / 1;
+    visibility: hidden;
+  }
+
+  .glitch-face {
+    grid-area: 1 / 1;
+    position: relative;
+  }
+
+  /* RGB-split layers exist only while glitching */
+  .glitch.is-glitching .glitch-face {
+    animation: glitch-shift 0.45s steps(1) both;
+  }
+
+  .glitch.is-glitching .glitch-face::before,
+  .glitch.is-glitching .glitch-face::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .glitch.is-glitching .glitch-face::before {
+    color: var(--color-arc-magenta);
+    animation: glitch-a 0.45s steps(1) both;
+  }
+
+  .glitch.is-glitching .glitch-face::after {
+    color: var(--color-arc-cyan);
+    animation: glitch-b 0.45s steps(1) both;
+  }
+
+  @keyframes glitch-shift {
+    0% { transform: translate(0); }
+    15% { transform: translate(-2px, 1px); }
+    30% { transform: translate(2px, -1px); }
+    45% { transform: translate(0); }
+    60% { transform: translate(1px, 0) skewX(-4deg); }
+    75% { transform: translate(-1px, 0); }
+    100% { transform: translate(0); }
+  }
+
+  @keyframes glitch-a {
+    0% { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 0); }
+    20% { clip-path: inset(55% 0 20% 0); transform: translate(3px, 0); }
+    40% { clip-path: inset(30% 0 45% 0); transform: translate(-2px, 0); }
+    60% { clip-path: inset(75% 0 5% 0); transform: translate(4px, 0); }
+    80% { clip-path: inset(5% 0 80% 0); transform: translate(-3px, 0); }
+    100% { clip-path: inset(40% 0 40% 0); transform: translate(0); }
+  }
+
+  @keyframes glitch-b {
+    0% { clip-path: inset(60% 0 15% 0); transform: translate(3px, 0); }
+    20% { clip-path: inset(8% 0 75% 0); transform: translate(-4px, 0); }
+    40% { clip-path: inset(70% 0 10% 0); transform: translate(2px, 0); }
+    60% { clip-path: inset(25% 0 50% 0); transform: translate(-3px, 0); }
+    80% { clip-path: inset(50% 0 25% 0); transform: translate(3px, 0); }
+    100% { clip-path: inset(40% 0 40% 0); transform: translate(0); }
+  }
+
+  /* ================= Arcade button ================= */
+
+  .arcade-btn {
+    --cut: 8px;
+    --edge: var(--color-arc-cyan);
+    --fill: var(--color-panel);
+    --ink: var(--color-arc-cyan);
+    display: inline-block;
+    padding: 1px;
+    border: 0;
+    background: var(--edge);
+    color: var(--ink);
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    clip-path: polygon(
+      var(--cut) 0,
+      100% 0,
+      100% calc(100% - var(--cut)),
+      calc(100% - var(--cut)) 100%,
+      0 100%,
+      0 var(--cut)
+    );
+  }
+
+  .arcade-btn-inner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+    background: var(--fill);
+    color: var(--ink);
+    clip-path: polygon(
+      calc(var(--cut) - 1px) 0,
+      100% 0,
+      100% calc(100% - var(--cut) + 1px),
+      calc(100% - var(--cut) + 1px) 100%,
+      0 100%,
+      0 calc(var(--cut) - 1px)
+    );
+  }
+
+  .arcade-btn--primary {
+    --fill: var(--color-arc-cyan);
+    --ink: var(--color-void);
+  }
+
+  /* hover and keyboard focus look the same */
+  .arcade-btn:hover,
+  .arcade-btn:focus-visible {
+    --edge: var(--color-arc-magenta);
+    --fill: var(--color-panel-hi);
+    --ink: var(--color-ink);
+    animation: btn-flicker 0.3s steps(1) 1;
+  }
+
+  .arcade-btn--primary:hover,
+  .arcade-btn--primary:focus-visible {
+    --fill: var(--color-arc-magenta);
+    --ink: var(--color-void);
+  }
+
+  /* the clip-path would hide a normal outline, so draw it inside */
+  .arcade-btn:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: -5px;
+  }
+
+  .arcade-btn--primary:focus-visible {
+    outline-color: var(--color-void);
+  }
+
+  .arcade-btn:active {
+    transform: translateY(1px);
+    filter: brightness(1.2);
+  }
+
+  .arcade-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    animation: none;
+  }
+
+  [data-fx='off'] .arcade-btn:hover,
+  [data-fx='off'] .arcade-btn:focus-visible {
+    animation: none;
+  }
+
+  @keyframes btn-flicker {
+    0% { opacity: 1; }
+    20% { opacity: 0.55; }
+    40% { opacity: 1; }
+    60% { opacity: 0.75; }
+    100% { opacity: 1; }
+  }
+
+  /* ================= Panel ================= */
+
+  .panel {
+    --cut: 14px;
+    --edge: var(--color-line);
+    padding: 1px;
+    background: var(--edge);
+    clip-path: polygon(
+      var(--cut) 0,
+      100% 0,
+      100% calc(100% - var(--cut)),
+      calc(100% - var(--cut)) 100%,
+      0 100%,
+      0 var(--cut)
+    );
+  }
+
+  .panel-inner {
+    height: 100%;
+    background: var(--color-panel);
+    clip-path: polygon(
+      calc(var(--cut) - 1px) 0,
+      100% 0,
+      100% calc(100% - var(--cut) + 1px),
+      calc(100% - var(--cut) + 1px) 100%,
+      0 100%,
+      0 calc(var(--cut) - 1px)
+    );
+  }
+
+  .panel--cyan { --edge: color-mix(in srgb, var(--color-arc-cyan) 65%, var(--color-line)); }
+  .panel--magenta { --edge: color-mix(in srgb, var(--color-arc-magenta) 65%, var(--color-line)); }
+  .panel--green { --edge: color-mix(in srgb, var(--color-arc-green) 65%, var(--color-line)); }
+}

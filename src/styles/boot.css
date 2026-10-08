@@ -1,0 +1,64 @@
+/* ================= Boot sequence ================= */
+
+/* each line snaps in */
+.boot-line {
+  animation: boot-in 0.18s steps(3) backwards;
+}
+
+/* dotted leader between "LOADING SKILLS" and "OK" */
+.boot-dots {
+  flex: 1;
+  min-width: 1rem;
+  margin-bottom: 0.25em;
+  border-bottom: 1px dotted var(--color-line);
+}
+
+/* blinking cursor only at FX ON (static underscore at LOW) */
+[data-fx='on'] .boot-cursor {
+  animation: boot-blink 1s steps(1) infinite;
+}
+
+/* "CRT turns off" when leaving the boot screen */
+.boot--leaving {
+  animation: boot-off 0.32s ease-in forwards;
+}
+
+[data-fx='off'] .boot-line {
+  animation: none;
+}
+
+[data-fx='off'] .boot--leaving {
+  animation: none;
+  opacity: 0;
+}
+
+/* "CRT turns on" for the site after a fresh intro */
+.power-on {
+  transform-origin: center;
+  animation: power-on 0.45s ease-out backwards;
+}
+
+[data-fx='off'] .power-on {
+  animation: none;
+}
+
+@keyframes boot-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes boot-blink {
+  50% { opacity: 0; }
+}
+
+@keyframes boot-off {
+  0% { transform: none; filter: none; opacity: 1; }
+  60% { transform: scaleY(0.04); filter: brightness(2.5); opacity: 1; }
+  100% { transform: scaleY(0.04) scaleX(0); filter: brightness(2.5); opacity: 0; }
+}
+
+@keyframes power-on {
+  0% { transform: scaleY(0.02) scaleX(0.6); filter: brightness(3); opacity: 0.8; }
+  40% { transform: scaleY(0.02) scaleX(1); filter: brightness(3); opacity: 1; }
+  100% { transform: none; filter: none; opacity: 1; }
+}
