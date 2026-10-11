@@ -40,8 +40,8 @@ No game engine, no 3D library and no background video. Heavy effects are CSS-onl
 Requires Node.js 20.19 or newer.
 
 ```bash
-git clone https://github.com/Soleuss2/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/Soleuss2/rain-heart-portfolio-v2.git
+cd rain-heart-portfolio-v2
 npm install
 npm run dev
 ```
