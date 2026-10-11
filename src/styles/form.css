@@ -1,0 +1,91 @@
+/* ================= Contact form fields ================= */
+
+@layer components {
+  .field-wrap {
+    position: relative;
+    margin-top: 0.4rem;
+  }
+
+  .field {
+    display: block;
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.6rem 0.75rem 0.6rem 2rem;
+    background: var(--color-void);
+    border: 1px solid var(--color-line);
+    border-left: 3px solid var(--color-line);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 1rem; /* 16px: stops iOS zooming into the field */
+    caret-color: var(--color-arc-green);
+    /* shows in forced-colors / high-contrast mode, invisible otherwise */
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+  }
+
+  .field::placeholder {
+    color: color-mix(in srgb, var(--color-ink-dim) 55%, transparent);
+  }
+
+  .field:hover {
+    border-color: color-mix(in srgb, var(--color-arc-cyan) 45%, var(--color-line));
+  }
+
+  .field:focus {
+    border-color: var(--color-arc-cyan);
+    border-left-color: var(--color-arc-magenta);
+    box-shadow:
+      0 0 0 1px var(--color-arc-cyan),
+      0 0 18px rgba(34, 230, 255, 0.15);
+  }
+
+  /* only after the visitor has interacted: never while still typing */
+  .field:user-invalid {
+    border-color: var(--color-arc-orange);
+    border-left-color: var(--color-arc-orange);
+  }
+
+  .field:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  textarea.field {
+    resize: vertical;
+    min-height: 8rem;
+    line-height: 1.5;
+  }
+
+  /* the ">" prompt */
+  .field-prompt {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-arc-cyan);
+    font-family: var(--font-mono);
+    pointer-events: none;
+  }
+
+  .field-prompt--top {
+    top: 0.75rem;
+    transform: none;
+  }
+
+  .field:focus ~ .field-prompt,
+  .field-wrap:focus-within .field-prompt {
+    color: var(--color-arc-green);
+  }
+
+  /* Chrome paints autofilled fields light by default */
+  .field:-webkit-autofill,
+  .field:-webkit-autofill:hover,
+  .field:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-ink);
+    -webkit-box-shadow: 0 0 0 1000px var(--color-void) inset;
+    caret-color: var(--color-arc-green);
+  }
+}

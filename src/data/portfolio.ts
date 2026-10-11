@@ -33,8 +33,12 @@ export interface SkillGroup {
 export interface Certificate {
   id: string
   title: string
-  issuer: string
-  image: string
+  /** Leave out if unsure: the site then shows no issuer line. */
+  issuer?: string
+  /** Preview picture (jpg/png). Optional. */
+  image?: string
+  /** A PDF or other file to open. Used when there is no image. */
+  file?: string
   alt: string
 }
 
@@ -97,8 +101,8 @@ export const links = {
   github: 'https://github.com/Soleuss2',
   linkedin: 'https://www.linkedin.com/in/rain-heart-opinion-0ba725414',
   site: 'https://rain-heart-portfolio.vercel.app/',
-  // Add your PDF at public/Rain-Heart-Opinion-Resume.pdf
-  resume: '/Rain-Heart-Opinion-Resume.pdf',
+  resume: '/Opinion.pdf',
+  web3formsKey: '1fb7ddc3-2349-4346-91bc-7b390f6962b1',
 } as const
 
 export const navItems: NavItem[] = [
@@ -260,6 +264,13 @@ export const certificates: Certificate[] = [
     issuer: 'AWS Training & Certification',
     image: '/certificates/aws-amplify-getting-started.jpg',
     alt: 'AWS Amplify Getting Started completion certificate',
+  },
+    {
+    id: 'spot-the-scam',
+    title: 'Spot the Scam',
+    issuer: 'DICT (Cyber Hygiene Fridays)',
+    image: '/certificates/Spot_The_Scam.jpg',
+    alt: 'Spot the Scam certificate of attendance',
   },
 ]
 

@@ -9,6 +9,8 @@ import './styles/arcade.css'
 import './styles/components.css'
 import './styles/boot.css'
 import './styles/hud.css'
+import './styles/projects.css'
+import './styles/form.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(

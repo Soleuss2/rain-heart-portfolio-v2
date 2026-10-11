@@ -1,0 +1,76 @@
+/* ================= Projects ================= */
+
+/* keeps the layout from shifting when the modal hides the page scrollbar */
+html {
+  scrollbar-gutter: stable;
+}
+
+.project-card:hover {
+  --edge: var(--color-arc-cyan);
+}
+
+/* the card shows a keyboard-focus edge when its open button is focused */
+.project-card:has(.card-open:focus-visible) {
+  --edge: var(--color-ink);
+}
+
+/* stretches the open button over the whole card */
+.card-open::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+/* cursor spotlight (mouse only, FX ON only) */
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(34, 230, 255, 0.1),
+    transparent 70%
+  );
+  transition: opacity 0.2s;
+}
+
+@media (hover: hover) {
+  [data-fx='on'] .project-card:hover::after {
+    opacity: 1;
+  }
+}
+
+/* CSS-drawn "cartridge label" */
+.cart-label {
+  border: 1px solid var(--color-line);
+  background:
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 10px,
+      rgba(34, 230, 255, 0.05) 10px 11px
+    ),
+    var(--color-panel-hi);
+  transition: opacity 0.3s;
+}
+
+.project-card:not(.is-unlocked) .cart-label {
+  opacity: 0.45;
+}
+
+/* one-time flash when a card unlocks (FX ON only) */
+[data-fx='on'] .project-card.is-unlocked {
+  animation: unlock-flash 0.6s ease-out 1;
+}
+
+[data-fx='on'] .scan-text {
+  animation: boot-blink 1s steps(1) infinite;
+}
+
+@keyframes unlock-flash {
+  0% { filter: brightness(2) saturate(1.5); opacity: 0.7; }
+  35% { filter: brightness(1); opacity: 1; }
+  50% { filter: brightness(1.5); }
+  100% { filter: none; }
+}
